@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: karthick-app-deployment
+  name: karthickkv-app-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: web
+      app: karthick
   template:
     metadata:
       labels:
-        app: web
+        app: karthick
     spec:
       containers:
       - name: cart-app
@@ -24,3 +24,17 @@ spec:
             cpu: "50m"
         ports:
         - containerPort: 3015
+---
+#Writing Service.yaml to expose the application
+apiVersion: v1
+kind: Service
+metadata:
+  name: karthick-flower-app-svc
+spec:
+  selector:
+    app: karthick
+  ports:
+  - port: 3016
+    targetPort: 3015
+  type: LoadBalancer
+
